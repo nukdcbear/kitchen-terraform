@@ -12,14 +12,14 @@ adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ### Added
 
-- Verifier systems have a `bastion_host_output` attribute which allows 
-  a bastion host to be obtained from a Terraform output rather than 
+- Verifier systems have a `bastion_host_output` attribute which allows
+  a bastion host to be obtained from a Terraform output rather than
   statically defined with the `bastion_host` attribute.
 
 ### Fixed
 
 - All plugin log messages use consistent levels.
-- The output of the `terraform output` command has been reverted to log 
+- The output of the `terraform output` command has been reverted to log
   at the debug level rather than the warn level.
 
 ## [5.2.0] - 2020-02-27
