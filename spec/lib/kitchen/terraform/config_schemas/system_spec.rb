@@ -67,6 +67,16 @@ require "kitchen/terraform/config_schemas/system"
     end
   end
 
+  shared_examples "an optional hash" do
+    specify "the input may include the attribute" do
+      expect(subject.call({}).errors).not_to include attribute => ["is missing"]
+    end
+
+    specify "the input must associate the attribute with a hash" do
+      expect(subject.call(attribute => 123).errors).to include attribute => ["must be a hash"]
+    end
+  end
+
   shared_examples "an optional integer" do
     specify "the input may include the attribute" do
       expect(subject.call({}).errors).not_to include attribute => ["is missing"]
@@ -102,12 +112,12 @@ require "kitchen/terraform/config_schemas/system"
       it_behaves_like "a required string"
     end
 
-    specify "the input may include :attrs_outputs" do
-      expect(subject.call({}).errors).not_to include attrs_outputs: ["is missing"]
-    end
+    describe ":attrs_outputs" do
+      let :attribute do
+        :attrs_outputs
+      end
 
-    specify "the input must associate :attrs_outputs with a hash" do
-      expect(subject.call(attrs_outputs: 123).errors).to include attrs_outputs: ["must be a hash"]
+      it_behaves_like "an optional hash"
     end
 
     describe ":attrs" do
@@ -188,6 +198,30 @@ require "kitchen/terraform/config_schemas/system"
       end
 
       it_behaves_like "an optional string"
+    end
+
+    describe ":input_files" do
+      let :attribute do
+        :input_files
+      end
+
+      it_behaves_like "an optional array of strings"
+    end
+
+    describe ":inputs" do
+      let :attribute do
+        :inputs
+      end
+
+      it_behaves_like "an optional hash"
+    end
+
+    describe ":inputs_outputs" do
+      let :attribute do
+        :inputs_outputs
+      end
+
+      it_behaves_like "an optional hash"
     end
 
     describe ":key_files" do

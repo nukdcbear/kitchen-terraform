@@ -78,8 +78,11 @@ module Kitchen
       #
       # ====== attrs
       #
+      # The +attrs+ key is deprecated and will be removed in a major version release of Kitchen-Terraform. The
+      # +input_files+ key is functionally equivalent but its name uses the contemporary Inspec vocabulary.
+      #
       # The value of the +attrs+ key is a sequence of scalars which is used to locate any
-      # {https://www.inspec.io/docs/reference/profiles/#profile-attributes InSpec profile attributes} files.
+      # {https://www.inspec.io/docs/reference/inputs/ InSpec input} files.
       #
       # <em>Example kitchen.yml</em>
       #   verifier:
@@ -88,17 +91,20 @@ module Kitchen
       #       - name: a system
       #         backend: local
       #         attrs:
-      #           - /path/to/first_attributes.yml
-      #           - /path/to/second_attributes.yml
+      #           - /work/first_inputs.yml
+      #           - /work/second_inputs.yml
       #
       # ====== attrs_outputs
       #
-      # The value of the +attrs_outputs+ key is a mapping of scalars to scalars which is used to define
-      # {https://www.inspec.io/docs/reference/profiles/#profile-attributes InSpec profile attributes} with the values
-      # of Terraform outputs.
+      # The +attrs_outputs+ key is deprecated and will be removed in a major verion change of Kitchen-Terraform. The
+      # +inputs_outputs+ key is functionally equivalent but its name uses the contemporary InSpec vocabulary.
       #
-      # The use of the +attrs_outputs+ key is only necessary to override the default definitions of profile attributes
-      # with names and values equivalent to the outputs.
+      # The value of the +attrs_outputs+ key is a mapping of scalars to scalars which is used to define
+      # {https://www.inspec.io/docs/reference/inputs/ InSpec inputs} with the values of
+      # {https://www.terraform.io/docs/configuration/outputs.html Terraform outputs}.
+      #
+      # The use of the +attrs_outputs+ key is only necessary to override the default definitions of inputs with names
+      # and values equivalent to the outputs.
       #
       # <em>Example kitchen.yml</em>
       #   verifier:
@@ -107,7 +113,7 @@ module Kitchen
       #       - name: a system
       #         backend: local
       #         attrs_outputs:
-      #           an_attribute_name: an_output_name
+      #           example_inspec_input: example_terraform_output
       #
       # ====== backend_cache
       #
@@ -259,6 +265,53 @@ module Kitchen
       #       - name: a system
       #         backend: ssh
       #         hosts_output: an_output
+      #
+      # ====== input_files
+      #
+      # The value of the +input_files+ key is a sequence of scalars which is used to locate
+      # {https://www.inspec.io/docs/reference/inputs/#setting-input-values-using-input-file InSpec input files}.
+      #
+      # <em>Example kitchen.yml</em>
+      #   verifier:
+      #     name: terraform
+      #     systems:
+      #       - name: a system
+      #         backend: ssh
+      #         input_files:
+      #           - /work/first-input-file.yml
+      #           - /work/second-input-file.yml
+      #
+      # ====== inputs
+      #
+      # The value of the +inputs+ key is a mapping of scalars to scalars which is used to define
+      # {https://www.inspec.io/docs/reference/inputs/ InSpec inputs}.
+      #
+      # <em>Example kitchen.yml</em>
+      #   verifier:
+      #     name: terraform
+      #     systems:
+      #       - name: a system
+      #         backend: local
+      #         inputs:
+      #           example_input: "test value"
+      #
+      # ====== inputs_outputs
+      #
+      # The value of the +inputs_outputs+ key is a mapping of scalars to scalars which is used to define
+      # {https://www.inspec.io/docs/reference/inputs/ InSpec inputs} with the values of
+      # {https://www.terraform.io/docs/configuration/outputs.html Terraform outputs}.
+      #
+      # The use of the +inputs_outputs+ key is only necessary to override the default definitions of inputs with names
+      # and values equivalent to the outputs.
+      #
+      # <em>Example kitchen.yml</em>
+      #   verifier:
+      #     name: terraform
+      #     systems:
+      #       - name: a system
+      #         backend: local
+      #         inputs_outputs:
+      #           example_inspec_input: example_terraform_output
       #
       # ====== key_files
       #
@@ -580,6 +633,9 @@ module Kitchen
         optional(:enable_password).filled :str?
         optional(:hosts).each :filled?, :str?
         optional(:hosts_output).filled :str?
+        optional(:input_files).each(:filled?, :str?)
+        optional(:inputs).filled :hash?
+        optional(:inputs_outputs).filled :hash?
         optional(:key_files).each(:filled?, :str?)
         optional(:password).filled :str?
         optional(:path).filled :str?
