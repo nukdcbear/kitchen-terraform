@@ -19,7 +19,7 @@ require "kitchen/terraform/command_flag/color"
 require "kitchen/terraform/command_flag/lock_timeout"
 require "kitchen/terraform/command_flag/plugin_dir"
 require "kitchen/terraform/command_flag/upgrade"
-require "kitchen/terraform/version"
+require "kitchen/terraform/command/version"
 
 module Kitchen
   module Terraform
