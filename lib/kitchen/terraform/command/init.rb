@@ -67,7 +67,7 @@ module Kitchen
             :plugin_directory
           )
           self.upgrade = ::Kitchen::Terraform::CommandFlag::Upgrade.new enabled: config.fetch(:upgrade_during_init)
-          self.version = ::Kitchen::Terraform::Command::Version
+          self.version = ::Kitchen::Terraform::Command::Version.new
         end
 
         # @return [String] the command with flags.
@@ -98,6 +98,7 @@ module Kitchen
           :options,
           :plugin_dir,
           :upgrade,
+          :version,
         )
       end
     end
