@@ -19,6 +19,7 @@ require "kitchen/terraform/command_flag/color"
 require "kitchen/terraform/command_flag/lock_timeout"
 require "kitchen/terraform/command_flag/plugin_dir"
 require "kitchen/terraform/command_flag/upgrade"
+require "kitchen/terraform/version"
 
 module Kitchen
   module Terraform
@@ -66,10 +67,12 @@ module Kitchen
             :plugin_directory
           )
           self.upgrade = ::Kitchen::Terraform::CommandFlag::Upgrade.new enabled: config.fetch(:upgrade_during_init)
+          self.version = ::Kitchen::Terraform::Command::Version.new
         end
 
         # @return [String] the command with flags.
         def to_s
+          puts version
           "init " \
           "-input=false " \
           "-lock=#{lock} " \
