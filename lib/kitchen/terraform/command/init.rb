@@ -56,7 +56,8 @@ module Kitchen
         #   Terraform module.
         # @option config [Boolean] :upgrade_during_init a toggle for upgrading modules and plugins.
         # @return [Kitchen::Terraform::Command::Init]
-        def initialize(config:)
+        def initialize(config:, logger:)
+          self.logger = logger
           self.backend_config = ::Kitchen::Terraform::CommandFlag::BackendConfig.new arguments: config.fetch(
             :backend_configurations
           )
@@ -72,7 +73,7 @@ module Kitchen
 
         # @return [String] the command with flags.
         def to_s
-          puts version
+          logger.warn version
           "init " \
           "-input=false " \
           "-lock=#{lock} " \
@@ -99,6 +100,7 @@ module Kitchen
           :plugin_dir,
           :upgrade,
           :version,
+          :logger,
         )
       end
     end

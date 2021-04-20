@@ -63,7 +63,10 @@ module Kitchen
             client: config.fetch(:client),
             logger: logger,
           )
-          self.init = ::Kitchen::Terraform::Command::Init.new config: hash_config
+          self.init = ::Kitchen::Terraform::Command::Init.new(
+            config: hash_config,
+            logger: logger,
+          )
           self.logger = logger
           self.options = { cwd: config.fetch(:root_module_directory), timeout: config.fetch(:command_timeout) }
           self.workspace_name = workspace_name
