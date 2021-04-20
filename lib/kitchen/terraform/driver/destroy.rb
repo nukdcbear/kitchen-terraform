@@ -79,7 +79,11 @@ module Kitchen
           define_options config: config
           self.workspace_name = workspace_name
           self.destroy = ::Kitchen::Terraform::Command::Destroy.new config: config
-          self.init = ::Kitchen::Terraform::Command::Init.new config: hash_config
+          self.init = ::Kitchen::Terraform::Command::Init.new(
+            config: hash_config,
+            logger: logger,
+            command_executor: command_executor,
+          )
           self.workspace_delete_test = ::Kitchen::Terraform::Command::WorkspaceDelete.new config: hash_config
           self.workspace_new_test = ::Kitchen::Terraform::Command::WorkspaceNew.new config: hash_config
           self.workspace_select_test = ::Kitchen::Terraform::Command::WorkspaceSelect.new config: hash_config

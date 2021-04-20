@@ -66,6 +66,7 @@ module Kitchen
           self.init = ::Kitchen::Terraform::Command::Init.new(
             config: hash_config,
             logger: logger,
+            command_executor: command_executor,
           )
           self.logger = logger
           self.options = { cwd: config.fetch(:root_module_directory), timeout: config.fetch(:command_timeout) }
